@@ -7,7 +7,12 @@ RUN mkdir -p /tmp/nginx/client-body
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 COPY conf/default.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80 to the world
-EXPOSE 80
+# Copy self-signed certificates
+COPY conf/ssl/localhost.key /etc/ssl/localhost.key
+COPY conf/ssl/localhost.crt /etc/ssl/localhost.crt
 
+# Expose port 80 (HTTP) and 443 (HTTPS)
+EXPOSE 80 443
+
+# Run NGINX
 CMD ["nginx"]
